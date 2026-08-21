@@ -1,0 +1,27 @@
+{
+  "name": "fab-lab",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Fab Lab: interactive semiconductor manufacturing practice lab for Dead Air University",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anil-ganti-nbc/fab-lab.git"
+  },
+  "scripts": {
+    "dev": "vite --port 8092 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --port 8092 --strictPort",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --import ./scripts/register-ts.mjs --test tests/*.test.ts"
+  },
+  "dependencies": {
+    "zod": "^4.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.16.5",
+    "playwright": "^1.55.0",
+    "typescript": "^5.7.0",
+    "vite": "^7.1.0"
+  }
+}
