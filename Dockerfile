@@ -1,8 +1,8 @@
-FROM node:22-bookworm-slim AS build
+FROM node:26-bookworm-slim
 WORKDIR /app
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 COPY package.json package-lock.json ./
-RUN (npm ci --no-audit --no-fund || npm install --no-audit --no-fund)
+RUN npm install --no-audit --no-fund
 COPY . .
 RUN npm run build
 
