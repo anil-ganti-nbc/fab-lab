@@ -1,16 +1,11 @@
-FROM node:22-alpine AS build
+FROM node:22-bookworm-slim AS build
 WORKDIR /app
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 COPY package.json package-lock.json ./
-RUN npm ci --no-audit --no-fund
+RUN (npm ci --no-audit --no-fund || npm install --no-audit --no-fund)
 COPY . .
 RUN npm run build
 
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
-COPY <<'NGINX' /etc/nginx/conf.d/default.conf
-server {
-  listen 80;
-  root /usr/share/nginx/html;
-  location / { try_files $uri $uri/ /index.html; }
-}
-NGINX
+RUN printf 'server {\n  listen 80;\n  root /usr/share/nginx/html;\n  location / { try_files $uri $uri/ /index.html; }\n}\n' > /etc/nginx/conf.d/default.conf
